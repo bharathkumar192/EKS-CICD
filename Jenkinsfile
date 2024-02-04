@@ -60,6 +60,21 @@ pipeline {
                 }
             }
         }
+        stage('Push the changed deployment file to git'){
+            steps{
+                script{
+                    sh """
+                        git config --global user.name "jeet004a"
+                        git config --global user.email "wastijeet110@gmail.com"
+                        git add deployment.yml
+                        git commit -m "Update deployment file"
+                    """
+                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                        sh "git push https://github.com/jeet004a/EKS-CICD.git master" 
+                    }
+                }
+            }
+        }
     }
     
 }
