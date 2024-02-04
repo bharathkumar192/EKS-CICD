@@ -31,35 +31,35 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image'){
-            steps{
-                script{
-                    docker.withRegistry('',REGISTRY_CREDS){
-                        docker_image.push("$BUILD_NUMBER")
-                        docker_image.push('latest')
-                    }
-                }
-            }
-        }
-        stage('Delete Docker images'){
-            steps{
-                script{
-                    sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker rmi ${IMAGE_NAME}:latest"
-                }
-            }
-        }
-        stage('Updating k8s deployment file'){
-            steps{
-                script{
-                    sh """
-                        cat deployment.yml
-                        sed -i 's/${APP_NAME}.*/${APP_NAME}/g' deployment.yml
-                        cat deployment.yml
-                    """
-                }
-            }
-        }
+        // stage('Push Docker Image'){
+        //     steps{
+        //         script{
+        //             docker.withRegistry('',REGISTRY_CREDS){
+        //                 docker_image.push("$BUILD_NUMBER")
+        //                 docker_image.push('latest')
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Delete Docker images'){
+        //     steps{
+        //         script{
+        //             sh "docker rmi ${IMAGE_NAME}:${IMAGE_TAG}"
+        //             sh "docker rmi ${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
+        // stage('Updating k8s deployment file'){
+        //     steps{
+        //         script{
+        //             sh """
+        //                 cat deployment.yml
+        //                 sed -i 's/${APP_NAME}.*/${APP_NAME}/g' deployment.yml
+        //                 cat deployment.yml
+        //             """
+        //         }
+        //     }
+        // }
     }
     
 }
