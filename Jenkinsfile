@@ -60,21 +60,20 @@ pipeline {
                 }
             }
         }
-        stage('Push the changed deployment file to git'){
-            steps{
-                script{
-                    sh """
-                        git config --global user.name "bharathkumar192"
-                        git config --global user.email "bharathkumar1922001@gmail.com"
-                        git add deployment.yml
-                        git commit -m "Update deployment file"
-                    """
-                    withCredentials([gitUsernamePassword(credentialsId: 'githubUser', gitToolName: 'Default')]) {
-                        sh "git push https://github.com/bharathkumar192/EKS-CICD.git master" 
-                    }
-                }
-            }
-        }
+        stage('Push the changed deployment file to git') {
+        steps {
+            sshagent(credentials: ['githubUser']) { // Assuming 'githubUser' is the ID of your SSH credential 
+                sh """
+                    git config --global user.name "bharathkumar192"
+                    git config --global user.email "bharathkumar1922001@gmail.com"
+                    git add deployment.yml
+                    git commit -m "Update deployment file"
+                    git push git@github.com:bharathkumar192/EKS-CICD.git master 
+                """
+             }
+         }
+     }
+
 
         stage('Deploy to Kubernetes'){
           steps {
