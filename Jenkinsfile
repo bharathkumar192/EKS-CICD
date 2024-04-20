@@ -56,6 +56,7 @@ pipeline {
                         cat deployment.yml
                         sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yml
                         cat deployment.yml
+                        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
                     """
                 }
             }
