@@ -18,7 +18,6 @@ pipeline {
         stage('Checkout SCM'){
             steps{
                 script{
-                    git creadentialsId : 'githubUser',
                     url: 'https://github.com/bharathkumar192/EKS-CICD.git',
                     branch: 'master'
                 }
@@ -69,7 +68,7 @@ pipeline {
                         git add deployment.yml
                         git commit -m "Update deployment file"
                     """
-                    withCredentials([gitUsernamePassword(credentialsId: 'githubUser', gitToolName: 'Default')]) {
+                    withCredentials([gitUsernamePassword(credentialsId: 'github_direct', gitToolName: 'Default')]) {
                         sh "git push origin https://github.com/bharathkumar192/EKS-CICD.git master" 
                     }
                 }
