@@ -77,15 +77,6 @@ pipeline {
          }
      }
 
-
-        stage('Deploy to Kubernetes'){
-          steps {
-            script {
-              
-            }
-          }
-        }
-
         stage('Deploy image to AWS EKS') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: 'eu-north-1') {
