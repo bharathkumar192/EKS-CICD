@@ -70,7 +70,7 @@ pipeline {
                         git commit -m "Update deployment file"
                     """
                     withCredentials([gitUsernamePassword(credentialsId: 'github_direct', gitToolName: 'Default')]) {
-                        sh "git push origin https://github.com/bharathkumar192/EKS-CICD.git master" 
+                        sh "git push https://github.com/bharathkumar192/EKS-CICD.git master" 
                     }
                 }
             }
