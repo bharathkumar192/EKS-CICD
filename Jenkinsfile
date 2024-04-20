@@ -81,10 +81,29 @@ pipeline {
         stage('Deploy to Kubernetes'){
           steps {
             script {
-              sh 'kubectl apply -f deployment.yml'
-              sh 'kubectl apply -f service.yml'
+              
             }
           }
+        }
+
+        stage('Deploy image to AWS EKS') {
+            steps {
+                withAWS(credentials: 'aws-credentials', region: 'eu-north-1') {
+                    sh 'echo "STAGE 4: Deploying image to AWS EKS cluster ..."'
+                    script { // You need to wrap your try block inside a script block
+                        try {
+                            sh 'aws eks update-kubeconfig --name JenkinsApp'
+                            sh 'kubectl config use-context arn:aws:eks:eu-north-1:730335486616:cluster/JenkinsApp'
+                            sh 'kubectl apply -f deployment.yml'
+                            sh 'kubectl apply -f service.yml'
+                            sh 'echo "Congratulations! Deployment successful."'
+                        } catch (Exception e) {
+                            sh 'echo "Failed to deploy to Kubernetes. Error: $e"'
+                            error "Stopping the build due to failure in deployment."    
+                        }
+                    }
+                }
+            }
         }
     }
     
