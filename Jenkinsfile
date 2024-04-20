@@ -74,8 +74,15 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes'){
+          steps {
+            script {
+              sh 'kubectl apply -f deployment.yml'
+              sh 'kubectl apply -f service.yml'
+            }
+          }
+        }
     }
     
 }
-
-//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
