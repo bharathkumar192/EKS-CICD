@@ -64,7 +64,6 @@ pipeline {
         steps {
             sshagent(credentials: ['githubUser']) { // Assuming 'githubUser' is the ID of your SSH credential 
                 sh """
-                    ssh-keyscan github.com >> ~/.ssh/known_hosts
                     git config --global user.name "bharathkumar192"
                     git config --global user.email "bharathkumar1922001@gmail.com"
                     git add deployment.yml
