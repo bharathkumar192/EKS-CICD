@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: django-app-container
-        image: bharathkumar192/django-arco-app:22
+        image: bharathkumar192/django-arco-app:23
         resources:
           limits:
             memory: "128Mi"
