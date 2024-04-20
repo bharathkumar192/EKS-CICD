@@ -1,11 +1,11 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_USERNAME="clinkratcheat"
-        APP_NAME="gitops-arco-app"
+        DOCKERHUB_USERNAME="bharathkumar192"
+        APP_NAME="django-arco-app"
         IMAGE_TAG="${BUILD_NUMBER}"
         IMAGE_NAME="${DOCKERHUB_USERNAME}"+"/"+"${APP_NAME}"
-        REGISTRY_CREDS='dockerhub'
+        REGISTRY_CREDS='dockerhub-token'
     }
     stages { 
         stage('Cleanup workspace') {
@@ -18,8 +18,8 @@ pipeline {
         stage('Checkout SCM'){
             steps{
                 script{
-                    git creadentialsId : 'github',
-                    url: 'https://github.com/jeet004a/EKS-CICD',
+                    git creadentialsId : 'githubUser',
+                    url: 'https://github.com/bharathkumar192/EKS-CICD.git',
                     branch: 'master'
                 }
             }
@@ -64,13 +64,13 @@ pipeline {
             steps{
                 script{
                     sh """
-                        git config --global user.name "jeet004a"
-                        git config --global user.email "wastijeet110@gmail.com"
+                        git config --global user.name "bharath"
+                        git config --global user.email "bharathkumar1922001@gmail.com"
                         git add deployment.yml
                         git commit -m "Update deployment file"
                     """
                     withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                        sh "git push https://github.com/jeet004a/EKS-CICD.git master" 
+                        sh "git push https://github.com/bharathkumar192/EKS-CICD.git master" 
                     }
                 }
             }
