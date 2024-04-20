@@ -64,13 +64,13 @@ pipeline {
             steps{
                 script{
                     sh """
-                        git config --global user.name "bharath"
+                        git config --global user.name "bharathkumar192"
                         git config --global user.email "bharathkumar1922001@gmail.com"
                         git add deployment.yml
                         git commit -m "Update deployment file"
                     """
-                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                        sh "git push https://github.com/bharathkumar192/EKS-CICD.git master" 
+                    withCredentials([gitUsernamePassword(credentialsId: 'githubUser', gitToolName: 'Default')]) {
+                        sh "git push origin https://github.com/bharathkumar192/EKS-CICD.git master" 
                     }
                 }
             }
