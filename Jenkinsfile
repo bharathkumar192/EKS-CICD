@@ -50,17 +50,19 @@ pipeline {
             }
         }
         stage('Updating k8s deployment file'){
-            steps{
-                script{
+            steps {
+                script {
                     sh """
-                        cat deployment.yml
-                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yml
-                        cat deployment.yml
-                        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+                    cat deployment.yml
+                    sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yml
+                    cat deployment.yml
+                    mkdir -p ~/.ssh
+                    ssh-keyscan github.com >> ~/.ssh/known_hosts
                     """
                 }
             }
         }
+
         stage('Push the changed deployment file to git') {
         steps {
             sshagent(credentials: ['githubUser']) { // Assuming 'githubUser' is the ID of your SSH credential 
