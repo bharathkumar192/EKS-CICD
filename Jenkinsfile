@@ -69,7 +69,7 @@ pipeline {
                         git add deployment.yml
                         git commit -m "Update deployment file"
                     """
-                    withCredentials([gitUsernamePassword(credentialsId: 'github_direct', gitToolName: 'Default')]) {
+                    withCredentials([gitUsernamePassword(credentialsId: 'githubUser', gitToolName: 'Default')]) {
                         sh "git push https://github.com/bharathkumar192/EKS-CICD.git master" 
                     }
                 }
